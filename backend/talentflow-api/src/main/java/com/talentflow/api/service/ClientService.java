@@ -3,6 +3,8 @@ package com.talentflow.api.service;
 import com.talentflow.api.entity.Client;
 import com.talentflow.api.repository.ClientRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +26,11 @@ public class ClientService {
     }
 
     public Client createClient(Client client) {
-        return clientRepository.save(client);
-    }
+    client.setCreatedAt(LocalDateTime.now());
+    client.setUpdatedAt(LocalDateTime.now());
+    return clientRepository.save(client);
+}
+
 
     public Client updateClient(Long id, Client updatedClient) {
         return clientRepository.findById(id)
@@ -38,7 +43,7 @@ public class ClientService {
                     existing.setContactPhone(updatedClient.getContactPhone());
                     existing.setNotes(updatedClient.getNotes());
                     existing.setIsActive(updatedClient.getIsActive());
-                    existing.setUpdatedAt(updatedClient.getUpdatedAt());
+                   existing.setUpdatedAt(LocalDateTime.now());
                     return clientRepository.save(existing);
                 })
                 .orElseThrow(() -> new RuntimeException("Client not found"));

@@ -1,6 +1,7 @@
 package com.talentflow.api.entity;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,17 +21,18 @@ public class User {
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @Column(name = "first_name", nullable = false, length = 100)
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 100)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
-    @Column(nullable = false, length = 30)
-    private String role; // ADMIN, REVIEWER, VIEWER
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;
 
     @Column(name = "is_active", nullable = false)
-    private Boolean isActive = true;
+    private boolean active;
 
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
@@ -87,19 +89,46 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public Boolean getIsActive() {
-    return isActive;
-}
+    public boolean isActive() {
+        return active;
+    }
 
-public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
-}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public LocalDateTime getLastLoginAt() {
+        return lastLoginAt;
+    }
+
+    public void setLastLoginAt(LocalDateTime lastLoginAt) {
+        this.lastLoginAt = lastLoginAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    // Constructors, getters and setters
+
 }

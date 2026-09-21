@@ -7,8 +7,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/talentflow
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: root
+    password: Vinitha@1245
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

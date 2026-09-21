@@ -1,11 +1,21 @@
 package com.talentflow.api.dto;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class ClientRequest {
+    @NotBlank(message = "Client code is required")
     private String clientCode;
+
+    @NotBlank(message = "Client name is required")
     private String clientName;
+    @NotBlank(message = "Industry is required")
     private String industry;
+    @NotBlank(message = "Contact name is required")
     private String contactName;
+    @Email(message = "Invalid email format")
     private String contactEmail;
+    @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 digits")
     private String contactPhone;
     private String notes;
     private Boolean isActive;
@@ -35,3 +45,7 @@ public class ClientRequest {
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }
 }
+
+
+
+

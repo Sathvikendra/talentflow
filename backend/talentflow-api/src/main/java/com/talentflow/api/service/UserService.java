@@ -43,12 +43,16 @@ public class UserService {
     ) {
 
         if (userRepository.existsByUsername(username)) {
+
+            
             throw new IllegalArgumentException(
                     "Username already exists"
             );
         }
 
         if (userRepository.existsByEmail(email)) {
+
+
             throw new IllegalArgumentException(
                     "Email already exists"
             );

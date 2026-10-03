@@ -142,7 +142,7 @@ public class UserController {
      *
      * passwordHash is intentionally excluded.
      */
-    private UserDTO.UserResponse toResponse(User user) {
+     private UserDTO.UserResponse toResponse(User user) {
 
         return new UserDTO.UserResponse(
                 user.getId(),
@@ -153,5 +153,5 @@ public class UserController {
                 user.getRole(),
                 user.isActive()
         );
-    }
+        }
 }

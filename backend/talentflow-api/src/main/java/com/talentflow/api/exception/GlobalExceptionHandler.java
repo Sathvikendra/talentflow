@@ -87,4 +87,14 @@ public ResponseEntity<?> handleSkillNotFound(
             .body(ex.getMessage());
 }
 
+@ExceptionHandler(CandidateNotFoundException.class)
+public ResponseEntity<?> handleCandidateNotFound(
+        CandidateNotFoundException ex
+) {
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+}
+
+
 }

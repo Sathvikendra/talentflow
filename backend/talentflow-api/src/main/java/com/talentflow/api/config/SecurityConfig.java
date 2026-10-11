@@ -64,6 +64,7 @@ public class SecurityConfig {
                         //added this line
                         .requestMatchers("/api/v1/skills/**").permitAll()
                          .requestMatchers("/api/v1/requirement-skills/**").permitAll()
+                         .requestMatchers("/api/v1/candidates/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

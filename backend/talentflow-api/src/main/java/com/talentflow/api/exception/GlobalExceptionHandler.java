@@ -66,5 +66,25 @@ handleRequirementNotFound(
     );
 }
 
+@ExceptionHandler(RequirementSkillNotFoundException.class)
+public ResponseEntity<?> handleRequirementSkillNotFound(
+        RequirementSkillNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+}
+@ExceptionHandler(
+        SkillNotFoundException.class
+)
+public ResponseEntity<?> handleSkillNotFound(
+        SkillNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+}
 
 }

@@ -4,6 +4,11 @@ import com.talentflow.api.dto.ClientRequest;
 import com.talentflow.api.dto.ClientResponse;
 import com.talentflow.api.entity.Client;
 import com.talentflow.api.service.ClientService;
+
+import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +39,12 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientResponse createClient(@RequestBody ClientRequest request) {
+    public ClientResponse createClient( @Valid @RequestBody ClientRequest request) {
         Client client = toEntity(request);
         return toResponse(clientService.createClient(client));
     }
+   
+
 
     @PutMapping("/{id}")
     public ClientResponse updateClient(@PathVariable Long id, @RequestBody ClientRequest request) {

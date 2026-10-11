@@ -143,10 +143,7 @@ public class UserService {
 
         User user = getUserById(id);
 
-        /*
-         * Check username uniqueness only when the username
-         * is actually being changed.
-         */
+
         if (username != null &&
                 !username.equals(user.getUsername())) {
 

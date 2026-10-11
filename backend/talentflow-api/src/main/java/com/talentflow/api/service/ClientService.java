@@ -1,6 +1,7 @@
 package com.talentflow.api.service;
 
 import com.talentflow.api.entity.Client;
+import com.talentflow.api.exception.ClientNotFoundException;
 import com.talentflow.api.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,10 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Optional<Client>getClientById(Long id) {
-        return clientRepository.findById(id);
-    }
+    public Client getClientById(Long id) {
+        return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("Client with ID " + id + " not found"));
+}
+    
 
     public Client createClient(Client client) {
     client.setCreatedAt(LocalDateTime.now());
@@ -43,7 +45,7 @@ public class ClientService {
                     existing.setContactPhone(updatedClient.getContactPhone());
                     existing.setNotes(updatedClient.getNotes());
                     existing.setIsActive(updatedClient.getIsActive());
-                   existing.setUpdatedAt(LocalDateTime.now());
+                    existing.setUpdatedAt(LocalDateTime.now());
                     return clientRepository.save(existing);
                 })
                 .orElseThrow(() -> new RuntimeException("Client not found"));

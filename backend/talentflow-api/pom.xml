@@ -122,7 +122,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
-		</dependency> 
+		</dependency>
 		<dependency>
 			<groupId>me.paulschwarz</groupId>
 			<artifactId>spring-dotenv</artifactId>
@@ -139,4 +139,5 @@
 		</plugins>
 	</build>
 
+	
 </project>

@@ -96,5 +96,26 @@ public ResponseEntity<?> handleCandidateNotFound(
             .body(ex.getMessage());
 }
 
+@ExceptionHandler(
+        ResumeDocumentNotFoundException.class
+)
+public ResponseEntity<?> handleResumeNotFound(
+        ResumeDocumentNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+}
+
+@ExceptionHandler(CandidateSkillNotFoundException.class)
+public ResponseEntity<?> handleCandidateSkillNotFound(
+        CandidateSkillNotFoundException ex
+) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(ex.getMessage());
+}
 
 }

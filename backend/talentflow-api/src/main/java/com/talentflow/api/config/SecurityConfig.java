@@ -65,6 +65,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/skills/**").permitAll()
                          .requestMatchers("/api/v1/requirement-skills/**").permitAll()
                          .requestMatchers("/api/v1/candidates/**").permitAll()
+                         .requestMatchers("/api/v1/resumes/**").permitAll()
+                         .requestMatchers("/api/v1/candidate-skills/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.talentflow.api.entity.Role;
 import com.talentflow.api.entity.User;
+import com.talentflow.api.exception.DuplicateResourceException;
 import com.talentflow.api.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -43,19 +44,17 @@ public class UserService {
     ) {
 
         if (userRepository.existsByUsername(username)) {
-
-            
-            throw new IllegalArgumentException(
-                    "Username already exists"
-            );
+            throw new DuplicateResourceException("Username already exists");
+            // throw new IllegalArgumentException(
+            //         "Username already exists"
+            // );
         }
 
         if (userRepository.existsByEmail(email)) {
-
-
-            throw new IllegalArgumentException(
-                    "Email already exists"
-            );
+            throw new DuplicateResourceException("Email already exists");
+            // throw new IllegalArgumentException(
+            //         "Email already exists"
+            // );
         }
 
         User user = new User();

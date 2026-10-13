@@ -7,6 +7,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Instant;
 
 @Component
 public class SecurityExceptionHandling
@@ -25,8 +26,13 @@ public class SecurityExceptionHandling
         response.getWriter().write("""
             {
               "success": false,
-              "message": "Access denied"
+              "message": "Access denied",
+              "timestamp": "%s",
+              "path": "%s"
             }
-            """);
+            """.formatted(
+                Instant.now(),
+                request.getRequestURI()
+            ));
     }
 }

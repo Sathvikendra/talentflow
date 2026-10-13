@@ -6,6 +6,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,109 +16,160 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     // Handle validation errors
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-            errors.put(error.getField(), error.getDefaultMessage())
-        );
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-    @ExceptionHandler(ClientNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleClientNotFound(ClientNotFoundException ex) {
-    Map<String, String> error = new HashMap<>();
-    error.put("error", ex.getMessage());
-    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+                Map<String, String> errors = new HashMap<>();
+                ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+                );
+                return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFoundException ex) {
-    Map<String, String> error = new HashMap<>();
-    error.put("error", ex.getMessage());
-    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-}
+        @ExceptionHandler(ClientNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleClientNotFound(ClientNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+
+        @ExceptionHandler(UserNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFoundException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
 
     
     // Handle all other exceptions
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleGeneralExceptions(Exception ex) {
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<Map<String, String>> handleGeneralExceptions(Exception ex) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", ex.getMessage());
+                return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        @ExceptionHandler(
+                RequirementNotFoundException.class
+        )
+        public ResponseEntity<Map<String,String>>
+        handleRequirementNotFound(
+                RequirementNotFoundException ex
+        ) {
+
+        Map<String,String> error =
+                new HashMap<>();
+
+        error.put(
+                "error",
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<>(
+                error,
+                HttpStatus.NOT_FOUND
+        );
+        }
+
+        @ExceptionHandler(RequirementSkillNotFoundException.class)
+        public ResponseEntity<?> handleRequirementSkillNotFound(
+                RequirementSkillNotFoundException ex
+        ) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+        }
+
+        @ExceptionHandler(
+                SkillNotFoundException.class
+        )
+        public ResponseEntity<?> handleSkillNotFound(
+                SkillNotFoundException ex
+        ) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+        }
+
+        @ExceptionHandler(CandidateNotFoundException.class)
+        public ResponseEntity<?> handleCandidateNotFound(
+                CandidateNotFoundException ex
+        ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+        }
+
+
+        @ExceptionHandler(CandidateSubmissionNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleCandidateSubmissionNotFound(
+                CandidateSubmissionNotFoundException ex) {
+
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 
-   @ExceptionHandler(
-        RequirementNotFoundException.class
-)
-public ResponseEntity<Map<String,String>>
-handleRequirementNotFound(
-        RequirementNotFoundException ex
-) {
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
 
-    Map<String,String> error =
-            new HashMap<>();
+        @ExceptionHandler(DuplicateResourceException.class)
+        public ResponseEntity<Map<String, String>> handleDuplicateResource(
+                DuplicateResourceException ex) {
 
-    error.put(
-            "error",
-            ex.getMessage()
-    );
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
 
-    return new ResponseEntity<>(
-            error,
-            HttpStatus.NOT_FOUND
-    );
-}
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+        }
 
-@ExceptionHandler(RequirementSkillNotFoundException.class)
-public ResponseEntity<?> handleRequirementSkillNotFound(
-        RequirementSkillNotFoundException ex
-) {
+        
+        @ExceptionHandler(StatusHistoryNotFoundException.class)
+        public ResponseEntity<Map<String, String>> handleStatusHistoryNotFound(
+                StatusHistoryNotFoundException ex) {
 
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
-}
-@ExceptionHandler(
-        SkillNotFoundException.class
-)
-public ResponseEntity<?> handleSkillNotFound(
-        SkillNotFoundException ex
-) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
 
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
-}
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
 
-@ExceptionHandler(CandidateNotFoundException.class)
-public ResponseEntity<?> handleCandidateNotFound(
-        CandidateNotFoundException ex
-) {
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
-}
+        @ExceptionHandler(
+                ResumeDocumentNotFoundException.class
+        )
+        public ResponseEntity<?> handleResumeNotFound(
+                ResumeDocumentNotFoundException ex
+        ) {
 
-@ExceptionHandler(
-        ResumeDocumentNotFoundException.class
-)
-public ResponseEntity<?> handleResumeNotFound(
-        ResumeDocumentNotFoundException ex
-) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+        }
 
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
-}
+        @ExceptionHandler(CandidateSkillNotFoundException.class)
+        public ResponseEntity<?> handleCandidateSkillNotFound(
+                CandidateSkillNotFoundException ex
+        ) {
 
-@ExceptionHandler(CandidateSkillNotFoundException.class)
-public ResponseEntity<?> handleCandidateSkillNotFound(
-        CandidateSkillNotFoundException ex
-) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+        }
 
-    return ResponseEntity
-            .status(HttpStatus.NOT_FOUND)
-            .body(ex.getMessage());
-}
+        
+        @ExceptionHandler(NotificationNotFoundException.class)
+        public ResponseEntity<?> handleNotificationNotFound(
+                NotificationNotFoundException exception,
+                HttpServletRequest request) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of(
+                "success", false,
+                "message", exception.getMessage(),
+                "timestamp", LocalDateTime.now(),
+                "path", request.getRequestURI()
+                )
+        );
+        }
+
 
 }

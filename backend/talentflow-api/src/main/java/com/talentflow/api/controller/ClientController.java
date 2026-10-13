@@ -33,9 +33,8 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ClientResponse getClientById(@PathVariable Long id) {
-        return clientService.getClientById(id)
-                .map(this::toResponse)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+        Client client = clientService.getClientById(id);
+        return this.toResponse(client);
     }
 
     @PostMapping

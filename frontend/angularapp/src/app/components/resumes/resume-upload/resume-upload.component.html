@@ -1,0 +1,18 @@
+<div class="upload-container">
+
+  <h2>Resume Upload</h2>
+
+  <input
+    type="file"
+    (change)="onFileSelected($event)"
+  >
+
+  <br><br>
+
+  <button
+    (click)="uploadResume()"
+  >
+    Upload Resume
+  </button>
+
+</div>

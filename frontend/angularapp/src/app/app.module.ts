@@ -75,6 +75,17 @@ import { NotFound } from './components/shared/not-found/not-found.component';
     provideClientHydration(),
     // , { provide: HTTP_INTERCEPTORS, useClass: Auth, multi: true }
   ],
+import { LoginComponent } from './components/auth/login/login.component';
+import { DashboardPageComponent } from './components/dashboard/dashboard-page/dashboard-page.component';
+
+@NgModule({
+  declarations: [App],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    LoginComponent,
+    DashboardPageComponent],
+  providers: [provideBrowserGlobalErrorListeners(), provideClientHydration()],
   bootstrap: [App],
 })
 export class AppModule {}

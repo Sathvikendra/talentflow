@@ -1,0 +1,81 @@
+<h2>Create Candidate</h2>
+
+<form (ngSubmit)="saveCandidate()">
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.candidateReference"
+    name="candidateReference"
+    placeholder="Candidate Reference"
+  >
+
+  <br><br>
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.firstName"
+    name="firstName"
+    placeholder="First Name"
+  >
+
+  <br><br>
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.lastName"
+    name="lastName"
+    placeholder="Last Name"
+  >
+
+  <br><br>
+
+  <input
+    type="email"
+    [(ngModel)]="candidate.email"
+    name="email"
+    placeholder="Email"
+  >
+
+  <br><br>
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.phone"
+    name="phone"
+    placeholder="Phone"
+  >
+
+  <br><br>
+
+  <input
+    type="number"
+    [(ngModel)]="candidate.totalExperienceYears"
+    name="experience"
+    placeholder="Experience"
+  >
+
+  <br><br>
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.currentTitle"
+    name="title"
+    placeholder="Current Title"
+  >
+
+  <br><br>
+
+  <input
+    type="text"
+    [(ngModel)]="candidate.currentCompany"
+    name="company"
+    placeholder="Current Company"
+  >
+
+  <br><br>
+
+  <button type="submit">
+    Save Candidate
+  </button>
+
+</form>

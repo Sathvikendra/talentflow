@@ -1,0 +1,29 @@
+<h2>Candidates</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Reference</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Company</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for(candidate of candidates; track candidate.id) {
+
+      <tr>
+        <td>{{ candidate.id }}</td>
+        <td>{{ candidate.candidateReference }}</td>
+        <td>{{ candidate.firstName }} {{ candidate.lastName }}</td>
+        <td>{{ candidate.email }}</td>
+        <td>{{ candidate.currentCompany }}</td>
+        <td>{{ candidate.status }}</td>
+      </tr>
+
+    }
+  </tbody>
+</table>

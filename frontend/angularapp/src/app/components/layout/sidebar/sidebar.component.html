@@ -1,0 +1,38 @@
+
+<aside
+  class="sidebar"
+  [class.sidebar-collapsed]="collapsed"
+  [attr.aria-label]="'Main navigation'">
+
+  <a class="sidebar-brand" routerLink="/home" aria-label="TalentFlow home">
+    <span class="brand-mark" aria-hidden="true">T</span>
+    <span class="brand-name" *ngIf="!collapsed">TalentFlow</span>
+  </a>
+
+  <nav class="sidebar-navigation" aria-label="Main menu">
+    <p class="navigation-heading" *ngIf="!collapsed">WORKSPACE</p>
+
+    <a
+      *ngFor="let item of navigationItems"
+      class="navigation-link"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.route === '/home' }"
+      [attr.aria-label]="collapsed ? item.label : null"
+      [attr.title]="collapsed ? item.label : null">
+
+      <span class="navigation-icon" aria-hidden="true">
+        {{ item.icon }}
+      </span>
+
+      <span class="navigation-label" *ngIf="!collapsed">
+        {{ item.label }}
+      </span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer" *ngIf="!collapsed">
+    <span class="sidebar-footer-title">TalentFlow</span>
+    <span class="sidebar-footer-text">Talent workflow workspace</span>
+  </div>
+</aside>

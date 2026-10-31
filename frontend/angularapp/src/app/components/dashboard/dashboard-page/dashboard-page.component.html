@@ -1,0 +1,79 @@
+<div class="dashboard-page">
+
+  <app-page-header
+    [title]="pageTitle"
+    [description]="pageDescription">
+  </app-page-header>
+
+  <section class="dashboard-welcome" aria-label="Dashboard introduction">
+    <div>
+      <h2>Your talent workflow at a glance</h2>
+      <p>
+        Monitor requirements, candidate submissions, and evaluation progress
+        from one place.
+      </p>
+    </div>
+
+    <div class="dashboard-quick-actions">
+      <button type="button"
+        class="primary-button"
+        (click)="onCreateRequirement()">
+        + New Requirement
+      </button>
+
+      <button type="button"
+        class="secondary-button"
+        (click)="onViewSubmissions()">
+        View Submissions
+      </button>
+    </div>
+  </section>
+
+  <section class="dashboard-section" aria-labelledby="metrics-heading">
+    <div class="section-heading">
+      <h2 id="metrics-heading">Overview</h2>
+      <p>Current activity across TalentFlow</p>
+    </div>
+
+    <app-loading-spinner
+      *ngIf="isLoading"
+      message="Loading dashboard metrics...">
+    </app-loading-spinner>
+
+    <app-error-message
+      *ngIf="errorMessage"
+      title="Unable to load dashboard"
+      [message]="errorMessage">
+    </app-error-message>
+
+    <div class="metrics-grid" *ngIf="!isLoading && !errorMessage">
+      <app-metric-card
+        *ngFor="let metric of metrics"
+        [title]="metric.title"
+        [value]="metric.value"
+        [description]="metric.description"
+        [icon]="metric.icon">
+      </app-metric-card>
+    </div>
+  </section>
+
+  <section class="dashboard-section" aria-labelledby="submissions-heading">
+    <div class="section-heading">
+      <div>
+        <h2 id="submissions-heading">Submission Overview</h2>
+        <p>Track submissions through their workflow stages</p>
+      </div>
+
+      <button type="button"
+        class="text-button"
+        (click)="onViewSubmissions()">
+        View all
+      </button>
+    </div>
+
+    <app-submission-summary
+      [statuses]="submissionStatuses">
+    </app-submission-summary>
+  </section>
+
+</div>

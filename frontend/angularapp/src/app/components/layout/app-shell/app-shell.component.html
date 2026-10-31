@@ -1,0 +1,27 @@
+<div class="app-shell">
+  
+  <app-sidebar 
+    [collapsed]="sidebarCollapsed">
+  </app-sidebar>
+
+  <div class="app-main" [class.sidebar-collapsed]="sidebarCollapsed">
+    
+    <app-topbar
+      [sidebarCollapsed]="sidebarCollapsed"
+      (menuToggle)="toggleSidebar()"
+      (logoutRequested)="requestLogout()">
+    </app-topbar>
+
+    <main class="app-content" id="main-content" tabindex="-1">
+      
+      <app-breadcrumb></app-breadcrumb>
+
+      <section class="page-content" aria-live="off">
+        <router-outlet></router-outlet>
+      </section>
+
+    </main>
+
+  </div>
+
+</div>

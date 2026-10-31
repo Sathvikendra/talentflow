@@ -1,0 +1,20 @@
+<header class="page-header">
+  <div class="page-header-copy">
+    <h1 class="page-title">{{ title }}</h1>
+
+    <p class="page-description" *ngIf="description">
+      {{ description }}
+    </p>
+  </div>
+
+  <div class="page-header-actions" *ngIf="actionLabel">
+    <button
+      type="button"
+      class="primary-button"
+      [disabled]="actionDisabled"
+      (click)="onActionClick()">
+      <span aria-hidden="true">+</span>
+      {{ actionLabel }}
+    </button>
+  </div>
+</header>

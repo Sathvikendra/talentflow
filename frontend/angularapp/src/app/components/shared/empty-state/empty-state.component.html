@@ -1,0 +1,19 @@
+<section class="empty-state" aria-labelledby="empty-state-title">
+  <div class="empty-state-icon" aria-hidden="true">○</div>
+
+  <h2 id="empty-state-title" class="empty-state-title">
+    {{ title }}
+  </h2>
+
+  <p class="empty-state-description">
+    {{ description }}
+  </p>
+
+  <button
+    *ngIf="actionLabel"
+    type="button"
+    class="primary-button"
+    (click)="onActionClick()">
+    {{ actionLabel }}
+  </button>
+</section>

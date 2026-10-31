@@ -1,0 +1,38 @@
+
+<div
+  class="dialog-backdrop"
+  *ngIf="visible"
+  (click)="cancel()">
+
+  <section
+    class="confirm-dialog"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="confirm-dialog-title"
+    aria-describedby="confirm-dialog-message"
+    (click)="$event.stopPropagation()">
+
+    <h2 id="confirm-dialog-title">{{ title }}</h2>
+
+    <p id="confirm-dialog-message">{{ message }}</p>
+
+    <div class="dialog-actions">
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="busy"
+        (click)="cancel()">
+        {{ cancelLabel }}
+      </button>
+
+      <button
+        type="button"
+        [class.danger-button]="destructive"
+        [class.primary-button]="!destructive"
+        [disabled]="busy"
+        (click)="confirm()">
+        {{ busy ? 'Please wait...' : confirmLabel }}
+      </button>
+    </div>
+  </section>
+</div>

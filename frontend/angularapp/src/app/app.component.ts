@@ -8,4 +8,7 @@ import { Component, signal } from '@angular/core';
 })
 export class App {
   protected readonly title = signal('angularapp');
+  // constructor(private authService: AuthService) {
+  //   console.log('TalentFlow API URL:', this.authService.getApiUrl());
+  // }
 }

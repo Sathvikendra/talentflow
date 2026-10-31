@@ -1,0 +1,17 @@
+
+<section class="error-message" role="alert">
+  <span class="error-icon" aria-hidden="true">!</span>
+
+  <div class="error-content">
+    <h2 class="error-title">{{ title }}</h2>
+    <p class="error-description">{{ message }}</p>
+  </div>
+
+  <button
+    *ngIf="retryLabel"
+    type="button"
+    class="secondary-button"
+    (click)="retry()">
+    {{ retryLabel }}
+  </button>
+</section>

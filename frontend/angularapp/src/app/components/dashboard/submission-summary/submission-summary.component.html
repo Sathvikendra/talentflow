@@ -1,0 +1,28 @@
+<section class="submission-summary" aria-label="Submission status summary">
+
+  <div class="submission-summary-total">
+    <span class="summary-total-label">Total across displayed statuses</span>
+    <strong class="summary-total-value">{{ totalSubmissions }}</strong>
+  </div>
+
+  <div class="submission-status-list" *ngIf="statuses.length > 0">
+    <div
+      class="submission-status-row"
+      *ngFor="let item of statuses">
+
+      <div class="submission-status-details">
+        <app-status-badge [status]="item.status"></app-status-badge>
+        <span class="submission-status-label">{{ item.label }}</span>
+      </div>
+
+      <strong class="submission-status-count">{{ item.count }}</strong>
+    </div>
+  </div>
+
+  <app-empty-state
+    *ngIf="statuses.length === 0"
+    title="No submission data"
+    description="Submission status information will appear here when available.">
+  </app-empty-state>
+
+</section>

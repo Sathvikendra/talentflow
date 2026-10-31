@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-resume-upload',
-  standalone: true,
-  imports: [FormsModule],
+  standalone: false,
+  //imports: [FormsModule],
   templateUrl: './resume-upload.component.html',
   styleUrl: './resume-upload.component.scss'
 })

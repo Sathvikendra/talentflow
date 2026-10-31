@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+//import { CommonModule } from '@angular/common';
 
 import { CandidateService } from '../../../services/candidate.service';
 import { Candidate } from '../../../models/candidate.model';
 
 @Component({
   selector: 'app-candidate-list',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: false,
+ // imports: [CommonModule],
   templateUrl: './candidate-list.component.html',
   styleUrl: './candidate-list.component.scss'
 })

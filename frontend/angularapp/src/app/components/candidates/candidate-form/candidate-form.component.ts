@@ -5,8 +5,8 @@ import { CandidateService } from '../../../services/candidate.service';
 
 @Component({
   selector: 'app-candidate-form',
-  standalone: true,
-  imports: [FormsModule],
+  standalone: false,
+  //imports: [FormsModule],
   templateUrl: './candidate-form.component.html',
   styleUrl: './candidate-form.component.scss'
 })

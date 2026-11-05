@@ -1,1 +1,77 @@
-<p>requirement-detail works!</p>
+<div class="requirement-detail-page">
+
+  <div class="page-header">
+    <div>
+      <button type="button" (click)="goBack()">← Back to Requirements</button>
+      <h1>Requirement Details</h1>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading">
+    Loading requirement details...
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button type="button" (click)="loadRequirement()">Retry</button>
+  </div>
+
+  <ng-container *ngIf="!isLoading && !errorMessage && requirement">
+
+    <section>
+      <h2>{{ requirement.title }}</h2>
+      <p>{{ requirement.rrNumber }}</p>
+
+      <span>{{ requirement.status }}</span>
+      <span>{{ requirement.priority || 'Priority not specified' }}</span>
+    </section>
+
+    <section>
+      <h3>General Information</h3>
+
+      <p><strong>Client:</strong> {{ getClientName() }}</p>
+      <p><strong>Employment Type:</strong> {{ requirement.employmentType || 'Not specified' }}</p>
+      <p><strong>Location:</strong> {{ requirement.location || 'Not specified' }}</p>
+      <p><strong>Work Mode:</strong> {{ requirement.workMode }}</p>
+      <p><strong>Onshore / Offshore:</strong> {{ requirement.onshoreOrOffshore }}</p>
+      <p><strong>Positions:</strong> {{ requirement.positionsCount }}</p>
+    </section>
+
+    <section>
+      <h3>Experience Requirements</h3>
+
+      <p>
+        <strong>Minimum Experience:</strong>
+        {{ requirement.minExperienceYears ?? 'Not specified' }}
+      </p>
+
+      <p>
+        <strong>Maximum Experience:</strong>
+        {{ requirement.maxExperienceYears ?? 'Not specified' }}
+      </p>
+    </section>
+
+    <section>
+      <h3>Description</h3>
+      <p>{{ requirement.description }}</p>
+    </section>
+
+    <section>
+      <h3>Timeline and Ownership</h3>
+
+      <p><strong>Created By:</strong> {{ getCreatedBy() }}</p>
+      <p><strong>Opened At:</strong> {{ requirement.openedAt ? (requirement.openedAt | date:'medium') : 'Not available' }}</p>
+      <p><strong>Target Fill Date:</strong> {{ requirement.targetFillDate ? (requirement.targetFillDate | date:'mediumDate') : 'Not specified' }}</p>
+      <p><strong>Closed At:</strong> {{ requirement.closedAt ? (requirement.closedAt | date:'medium') : 'Not closed' }}</p>
+      <p><strong>Created At:</strong> {{ requirement.createdAt ? (requirement.createdAt | date:'medium') : 'Not available' }}</p>
+      <p><strong>Last Updated:</strong> {{ requirement.updatedAt ? (requirement.updatedAt | date:'medium') : 'Not available' }}</p>
+    </section>
+
+    <section>
+      <h3>Skills</h3>
+      <p>Requirement skill information is not yet available through the backend API.</p>
+    </section>
+
+  </ng-container>
+
+</div>

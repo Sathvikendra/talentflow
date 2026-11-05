@@ -1,1 +1,224 @@
-<p>client-interview-detail works!</p>
+
+<div class="page-container">
+  <button type="button" (click)="goBack()">
+    Back to Client Interviews
+  </button>
+
+  <p *ngIf="isLoading">Loading interview...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p *ngIf="successMessage">{{ successMessage }}</p>
+
+  <div *ngIf="!isLoading && interview">
+    <h2>Client Interview #{{ interview.id }}</h2>
+
+    <section>
+      <h3>Interview Information</h3>
+
+      <p><strong>Submission ID:</strong> {{ interview.submissionId }}</p>
+
+      <p>
+        <strong>Client Interviewer:</strong>
+        {{ interview.clientInterviewerName || 'Not specified' }}
+      </p>
+
+      <p>
+        <strong>Interviewer Email:</strong>
+        {{ interview.clientInterviewerEmail || 'Not specified' }}
+      </p>
+
+      <p>
+        <strong>Scheduled At:</strong>
+        {{
+          interview.scheduledAt
+            ? (interview.scheduledAt | date:'medium')
+            : 'Not scheduled'
+        }}
+      </p>
+
+      <p>
+        <strong>Duration:</strong>
+        {{
+          interview.durationMinutes
+            ? interview.durationMinutes + ' minutes'
+            : 'Not specified'
+        }}
+      </p>
+
+      <p>
+        <strong>Meeting Link:</strong>
+        <a
+          *ngIf="interview.meetingLink"
+          [href]="interview.meetingLink"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Join Meeting
+        </a>
+        <span *ngIf="!interview.meetingLink">Not provided</span>
+      </p>
+
+      <p><strong>Result:</strong> {{ interview.result || 'PENDING' }}</p>
+
+      <p>
+        <strong>Conducted At:</strong>
+        {{
+          interview.conductedAt
+            ? (interview.conductedAt | date:'medium')
+            : 'Not conducted'
+        }}
+      </p>
+
+      <p>
+        <strong>Created:</strong>
+        {{ interview.createdAt ? (interview.createdAt | date:'medium') : 'Not available' }}
+      </p>
+    </section>
+
+    <hr />
+
+    <section *ngIf="interview.result === null">
+      <h3>Update Interviewer Details</h3>
+
+      <form (ngSubmit)="updateInterview()">
+        <div>
+          <label for="clientInterviewerName">Interviewer Name</label>
+          <input
+            id="clientInterviewerName"
+            type="text"
+            name="clientInterviewerName"
+            maxlength="255"
+            [(ngModel)]="clientInterviewerName"
+          />
+        </div>
+
+        <div>
+          <label for="clientInterviewerEmail">Interviewer Email</label>
+          <input
+            id="clientInterviewerEmail"
+            type="email"
+            name="clientInterviewerEmail"
+            maxlength="255"
+            [(ngModel)]="clientInterviewerEmail"
+          />
+        </div>
+
+        <div>
+          <label for="comments">Comments</label>
+          <textarea
+            id="comments"
+            name="comments"
+            rows="3"
+            [(ngModel)]="comments"
+          ></textarea>
+        </div>
+
+        <button type="submit" [disabled]="isSaving">
+          Save Interview Details
+        </button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section *ngIf="interview.result === null">
+      <h3>Schedule Client Interview</h3>
+
+      <form (ngSubmit)="scheduleInterview()">
+        <div>
+          <label for="scheduledAt">Scheduled Date and Time</label>
+          <input
+            id="scheduledAt"
+            type="datetime-local"
+            name="scheduledAt"
+            [(ngModel)]="scheduledAt"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="durationMinutes">Duration (minutes)</label>
+          <input
+            id="durationMinutes"
+            type="number"
+            name="durationMinutes"
+            min="1"
+            [(ngModel)]="durationMinutes"
+          />
+        </div>
+
+        <div>
+          <label for="meetingLink">Meeting Link</label>
+          <input
+            id="meetingLink"
+            type="url"
+            name="meetingLink"
+            maxlength="1000"
+            [(ngModel)]="meetingLink"
+          />
+        </div>
+
+        <button type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Schedule' }}
+        </button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section>
+      <h3>Interview Result</h3>
+
+      <div *ngIf="interview.result !== null">
+        <p><strong>Recorded Result:</strong> {{ interview.result }}</p>
+
+        <p>
+          <strong>Comments:</strong>
+          {{ interview.comments || 'No comments provided' }}
+        </p>
+      </div>
+
+      <form
+        *ngIf="interview.result === null"
+        (ngSubmit)="recordResult()"
+      >
+        <div>
+          <label for="conductedAt">Conducted Date and Time</label>
+          <input
+            id="conductedAt"
+            type="datetime-local"
+            name="conductedAt"
+            [(ngModel)]="conductedAt"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="result">Result</label>
+          <select
+            id="result"
+            name="result"
+            [(ngModel)]="result"
+            required
+          >
+            <option value="ACCEPTED">Accepted</option>
+            <option value="REJECTED">Rejected</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="resultComments">Comments</label>
+          <textarea
+            id="resultComments"
+            name="resultComments"
+            rows="4"
+            [(ngModel)]="comments"
+          ></textarea>
+        </div>
+
+        <button type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Submitting...' : 'Record Result' }}
+        </button>
+      </form>
+    </section>
+  </div>
+</div>

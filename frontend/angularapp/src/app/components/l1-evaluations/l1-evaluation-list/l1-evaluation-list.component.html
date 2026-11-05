@@ -1,1 +1,87 @@
-<p>l1-evaluation-list works!</p>
+
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h2>L1 Evaluations</h2>
+      <p>View and manage first-level interview evaluations.</p>
+    </div>
+
+    <button type="button" (click)="createEvaluation()">
+      Create Evaluation
+    </button>
+  </div>
+
+  <div class="filter-section">
+    <input
+      type="text"
+      placeholder="Search by evaluation, submission or interviewer ID"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    />
+
+    <select
+      [(ngModel)]="selectedResult"
+      (ngModelChange)="onResultFilterChange()"
+    >
+      <option value="ALL">All evaluations</option>
+      <option value="PENDING">Pending</option>
+      <option value="CLEARED">Cleared</option>
+      <option value="REJECTED">Rejected</option>
+    </select>
+  </div>
+
+  <p *ngIf="isLoading">Loading evaluations...</p>
+
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <p *ngIf="filteredEvaluations.length === 0">
+      No L1 evaluations found.
+    </p>
+
+    <table *ngIf="filteredEvaluations.length > 0">
+      <thead>
+        <tr>
+          <th>Evaluation ID</th>
+          <th>Submission ID</th>
+          <th>Interviewer ID</th>
+          <th>Scheduled At</th>
+          <th>Duration</th>
+          <th>Result</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let evaluation of filteredEvaluations">
+          <td>{{ evaluation.id }}</td>
+          <td>{{ evaluation.submissionId }}</td>
+          <td>{{ evaluation.interviewerId }}</td>
+          <td>
+            {{
+              evaluation.scheduledAt
+                ? (evaluation.scheduledAt | date:'medium')
+                : 'Not scheduled'
+            }}
+          </td>
+          <td>
+            {{
+              evaluation.durationMinutes
+                ? evaluation.durationMinutes + ' min'
+                : 'Not specified'
+            }}
+          </td>
+          <td>{{ getResultLabel(evaluation.result) }}</td>
+          <td>
+            <button
+              type="button"
+              (click)="openEvaluation(evaluation.id)"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

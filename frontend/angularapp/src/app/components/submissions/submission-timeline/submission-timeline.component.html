@@ -1,1 +1,56 @@
-<p>submission-timeline works!</p>
+<div class="submission-timeline">
+
+  <div>
+    <h3>Status History</h3>
+  </div>
+
+  <div *ngIf="isLoading">
+    Loading status history...
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button type="button" (click)="loadHistory()">Retry</button>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && history.length === 0">
+    <p>No status history is available for this submission.</p>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && history.length > 0">
+
+    <div *ngFor="let item of history">
+
+      <div>
+        <strong>{{ formatStatus(item.oldStatus) }}</strong>
+        <span> → </span>
+        <strong>{{ formatStatus(item.newStatus) }}</strong>
+      </div>
+
+      <p>
+        <strong>Reason:</strong>
+        {{ item.transitionReason || 'No reason provided' }}
+      </p>
+
+      <p *ngIf="item.comments">
+        <strong>Comments:</strong>
+        {{ item.comments }}
+      </p>
+
+      <p>
+        <strong>Changed By:</strong>
+        {{ item.changedBy ?? 'Not available' }}
+      </p>
+
+      <p>
+        <strong>Date:</strong>
+        {{ item.changedAt | date:'medium' }}
+      </p>
+
+      <hr>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,1 +1,163 @@
-<p>l1-evaluation-detail works!</p>
+
+<div class="page-container">
+  <button type="button" (click)="goBack()">Back to Evaluations</button>
+
+  <p *ngIf="isLoading">Loading evaluation...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p *ngIf="successMessage">{{ successMessage }}</p>
+
+  <div *ngIf="!isLoading && evaluation">
+    <h2>L1 Evaluation #{{ evaluation.id }}</h2>
+
+    <section>
+      <h3>Evaluation Information</h3>
+
+      <p><strong>Submission ID:</strong> {{ evaluation.submissionId }}</p>
+      <p><strong>Interviewer ID:</strong> {{ evaluation.interviewerId }}</p>
+      <p>
+        <strong>Created:</strong>
+        {{ evaluation.createdAt ? (evaluation.createdAt | date:'medium') : 'Not available' }}
+      </p>
+      <p>
+        <strong>Last Updated:</strong>
+        {{ evaluation.updatedAt ? (evaluation.updatedAt | date:'medium') : 'Not available' }}
+      </p>
+      <p><strong>Result:</strong> {{ evaluation.result ?? 'PENDING' }}</p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h3>Schedule Evaluation</h3>
+
+      <p>
+        {{
+          evaluation.result !== null
+            ? 'This evaluation is already completed and cannot be rescheduled.'
+            : 'Set or change the interview schedule.'
+        }}
+      </p>
+
+      <form
+        *ngIf="evaluation.result === null"
+        (ngSubmit)="scheduleEvaluation()"
+      >
+        <div>
+          <label for="scheduledAt">Scheduled Date and Time</label>
+          <input
+            id="scheduledAt"
+            type="datetime-local"
+            name="scheduledAt"
+            [(ngModel)]="scheduledAt"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="durationMinutes">Duration (minutes)</label>
+          <input
+            id="durationMinutes"
+            type="number"
+            name="durationMinutes"
+            min="1"
+            [(ngModel)]="durationMinutes"
+          />
+        </div>
+
+        <div>
+          <label for="meetingLink">Meeting Link</label>
+          <input
+            id="meetingLink"
+            type="url"
+            name="meetingLink"
+            [(ngModel)]="meetingLink"
+          />
+        </div>
+
+        <button type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Schedule' }}
+        </button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section>
+      <h3>Record Evaluation Result</h3>
+
+      <div *ngIf="evaluation.result !== null">
+        <p><strong>Recorded Result:</strong> {{ evaluation.result }}</p>
+        <p><strong>Conducted At:</strong>
+          {{ evaluation.conductedAt ? (evaluation.conductedAt | date:'medium') : 'Not available' }}
+        </p>
+        <p><strong>Technical Comments:</strong> {{ evaluation.technicalComments || 'None' }}</p>
+        <p><strong>Overall Comments:</strong> {{ evaluation.overallComments || 'None' }}</p>
+        <p><strong>Recommendation:</strong> {{ evaluation.recommendation || 'None' }}</p>
+      </div>
+
+      <form
+        *ngIf="evaluation.result === null"
+        (ngSubmit)="recordResult()"
+      >
+        <div>
+          <label for="conductedAt">Conducted Date and Time</label>
+          <input
+            id="conductedAt"
+            type="datetime-local"
+            name="conductedAt"
+            [(ngModel)]="conductedAt"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="result">Result</label>
+          <select
+            id="result"
+            name="result"
+            [(ngModel)]="result"
+            required
+          >
+            <option value="CLEARED">Cleared</option>
+            <option value="REJECTED">Rejected</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="technicalComments">Technical Comments</label>
+          <textarea
+            id="technicalComments"
+            name="technicalComments"
+            [(ngModel)]="technicalComments"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="overallComments">Overall Comments</label>
+          <textarea
+            id="overallComments"
+            name="overallComments"
+            [(ngModel)]="overallComments"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="recommendation">Recommendation</label>
+          <input
+            id="recommendation"
+            type="text"
+            name="recommendation"
+            maxlength="30"
+            [(ngModel)]="recommendation"
+          />
+        </div>
+
+        <button type="submit" [disabled]="isSaving">
+          {{ isSaving ? 'Submitting...' : 'Record Result' }}
+        </button>
+      </form>
+    </section>
+  </div>
+</div>

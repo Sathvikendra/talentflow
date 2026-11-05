@@ -1,1 +1,82 @@
-<p>submission-detail works!</p>
+<div class="submission-detail-page">
+
+  <div>
+    <button type="button" (click)="goBack()">
+      ← Back to Submissions
+    </button>
+
+    <h1>Submission Details</h1>
+  </div>
+
+  <div *ngIf="isLoading">
+    Loading submission...
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button type="button" (click)="loadSubmission()">Retry</button>
+  </div>
+
+  <ng-container *ngIf="!isLoading && !errorMessage && submission">
+
+    <section>
+      <h2>Submission #{{ submission.id }}</h2>
+
+      <p>
+        Current Status:
+        <strong>{{ getStatusLabel(submission.currentStatus) }}</strong>
+      </p>
+
+      <button type="button" (click)="openTransitionDialog()">
+        Change Status
+      </button>
+    </section>
+
+    <section>
+      <h3>Candidate and Requirement</h3>
+
+      <p><strong>Candidate ID:</strong> {{ submission.candidateId }}</p>
+      <p><strong>Requirement ID:</strong> {{ submission.requirementId }}</p>
+    </section>
+
+    <section>
+      <h3>Assignment</h3>
+
+      <p>
+        <strong>Assigned To:</strong>
+        {{ submission.assignedTo ?? 'Unassigned' }}
+      </p>
+
+      <p>
+        <strong>Assigned At:</strong>
+        {{ submission.assignedAt
+          ? (submission.assignedAt | date:'medium')
+          : 'Not assigned' }}
+      </p>
+
+      <p><strong>Submitted By:</strong> {{ submission.submittedBy ?? 'Not available' }}</p>
+    </section>
+
+    <section>
+      <h3>Submission Notes</h3>
+      <p>{{ submission.submissionNotes || 'No notes available.' }}</p>
+    </section>
+
+    <section>
+      <h3>Submission Timeline</h3>
+
+      <app-submission-timeline
+        [submissionId]="submission.id">
+      </app-submission-timeline>
+    </section>
+
+    <app-submission-transition-dialog
+      *ngIf="showTransitionDialog"
+      [submission]="submission"
+      (closed)="closeTransitionDialog()"
+      (statusUpdated)="onStatusUpdated()">
+    </app-submission-transition-dialog>
+
+  </ng-container>
+
+</div>

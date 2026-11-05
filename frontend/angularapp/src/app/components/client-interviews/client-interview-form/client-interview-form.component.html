@@ -1,1 +1,106 @@
-<p>client-interview-form works!</p>
+
+<div class="page-container">
+  <h2>Create Client Interview</h2>
+  <p>Create a client interview for a submission that has cleared L1.</p>
+
+  <p *ngIf="isLoadingSubmissions">Loading eligible submissions...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <p
+    *ngIf="!isLoadingSubmissions && eligibleSubmissions.length === 0"
+  >
+    No submissions are currently eligible for client interviews.
+  </p>
+
+  <form
+    *ngIf="!isLoadingSubmissions && eligibleSubmissions.length > 0"
+    (ngSubmit)="createInterview()"
+  >
+    <div>
+      <label for="submissionId">Select Submission</label>
+      <select
+        id="submissionId"
+        name="submissionId"
+        [(ngModel)]="submissionId"
+        required
+      >
+        <option [ngValue]="null">Select a submission</option>
+
+        <option
+          *ngFor="let submission of eligibleSubmissions"
+          [ngValue]="submission.id"
+        >
+          Submission #{{ submission.id }}
+          | Requirement #{{ submission.requirementId }}
+          | {{ submission.currentStatus }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="clientInterviewerName">Client Interviewer Name</label>
+      <input
+        id="clientInterviewerName"
+        type="text"
+        name="clientInterviewerName"
+        maxlength="255"
+        [(ngModel)]="clientInterviewerName"
+      />
+    </div>
+
+    <div>
+      <label for="clientInterviewerEmail">Client Interviewer Email</label>
+      <input
+        id="clientInterviewerEmail"
+        type="email"
+        name="clientInterviewerEmail"
+        maxlength="255"
+        [(ngModel)]="clientInterviewerEmail"
+      />
+    </div>
+
+    <div>
+      <label for="scheduledAt">Scheduled Date and Time (Optional)</label>
+      <input
+        id="scheduledAt"
+        type="datetime-local"
+        name="scheduledAt"
+        [(ngModel)]="scheduledAt"
+      />
+    </div>
+
+    <div>
+      <label for="durationMinutes">Duration in Minutes (Optional)</label>
+      <input
+        id="durationMinutes"
+        type="number"
+        name="durationMinutes"
+        min="1"
+        [(ngModel)]="durationMinutes"
+      />
+    </div>
+
+    <div>
+      <label for="meetingLink">Meeting Link (Optional)</label>
+      <input
+        id="meetingLink"
+        type="url"
+        name="meetingLink"
+        maxlength="1000"
+        [(ngModel)]="meetingLink"
+      />
+    </div>
+
+    <button type="submit" [disabled]="isSaving">
+      {{ isSaving ? 'Creating...' : 'Create Interview' }}
+    </button>
+
+    <button
+      type="button"
+      (click)="cancel()"
+      [disabled]="isSaving"
+    >
+      Cancel
+    </button>
+  </form>
+</div>

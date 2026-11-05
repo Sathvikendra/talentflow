@@ -1,3 +1,4 @@
+
 export type ClientInterviewResult = 'ACCEPTED' | 'REJECTED';
 
 export interface ClientInterview {
@@ -11,23 +12,23 @@ export interface ClientInterview {
   conductedAt: string | null;
   result: ClientInterviewResult | null;
   comments: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | null;
+  updatedAt: string | null;
 }
 
 export interface CreateClientInterviewRequest {
   submissionId: number;
-  clientInterviewerName?: string | null;
-  clientInterviewerEmail?: string | null;
-  scheduledAt?: string | null;
-  durationMinutes?: number | null;
-  meetingLink?: string | null;
+  clientInterviewerName: string | null;
+  clientInterviewerEmail: string | null;
+  scheduledAt: string | null;
+  durationMinutes: number | null;
+  meetingLink: string | null;
 }
 
 export interface ScheduleClientInterviewRequest {
   scheduledAt: string;
-  durationMinutes?: number | null;
-  meetingLink?: string | null;
+  durationMinutes: number | null;
+  meetingLink: string | null;
 }
 
 export interface UpdateClientInterviewRequest {
@@ -41,6 +42,6 @@ export interface UpdateClientInterviewRequest {
 
 export interface RecordClientInterviewResultRequest {
   result: ClientInterviewResult;
-  conductedAt?: string | null;
-  comments?: string | null;
+  conductedAt: string;
+  comments: string | null;
 }

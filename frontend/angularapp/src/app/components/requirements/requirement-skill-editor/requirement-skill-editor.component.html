@@ -1,1 +1,107 @@
-<p>requirement-skill-editor works!</p>
+<div class="requirement-skill-editor">
+
+  <div>
+    <h3>Required Skills</h3>
+    <p>Add the technical and professional skills expected for this requirement.</p>
+  </div>
+
+  <form [formGroup]="skillForm">
+
+    <div formArrayName="skills">
+
+      <div
+        *ngFor="let skill of skills.controls; let i = index"
+        [formGroupName]="i">
+
+        <h4>Skill {{ i + 1 }}</h4>
+
+        <div>
+          <label [for]="'skillName' + i">Skill Name *</label>
+
+          <input
+            [id]="'skillName' + i"
+            type="text"
+            formControlName="skillName"
+            placeholder="e.g. Java, Angular, MySQL"
+            (input)="onSkillChange()">
+
+          <small
+            *ngIf="skill.get('skillName')?.invalid
+                   && skill.get('skillName')?.touched">
+            Skill name is required.
+          </small>
+        </div>
+
+        <div>
+          <label [for]="'category' + i">Category</label>
+
+          <select
+            [id]="'category' + i"
+            formControlName="category"
+            (change)="onSkillChange()">
+
+            <option value="">Select Category</option>
+            <option value="PROGRAMMING">Programming</option>
+            <option value="FRAMEWORK">Framework</option>
+            <option value="DATABASE">Database</option>
+            <option value="CLOUD">Cloud</option>
+            <option value="DEVOPS">DevOps</option>
+            <option value="TOOLS">Tools</option>
+            <option value="SOFT_SKILLS">Soft Skills</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label [for]="'importance' + i">Importance *</label>
+
+          <select
+            [id]="'importance' + i"
+            formControlName="importance"
+            (change)="onSkillChange()">
+
+            <option value="REQUIRED">Required</option>
+            <option value="PREFERRED">Preferred</option>
+            <option value="OPTIONAL">Optional</option>
+          </select>
+        </div>
+
+        <div>
+          <label [for]="'minimumYears' + i">
+            Minimum Experience (Years)
+          </label>
+
+          <input
+            [id]="'minimumYears' + i"
+            type="number"
+            min="0"
+            step="0.5"
+            formControlName="minimumYears"
+            (input)="onSkillChange()">
+        </div>
+
+        <button
+          type="button"
+          (click)="removeSkill(i)">
+          Remove Skill
+        </button>
+
+        <hr>
+
+      </div>
+
+    </div>
+
+  </form>
+
+  <button
+    type="button"
+    (click)="addSkill()">
+    + Add Another Skill
+  </button>
+
+  <p *ngIf="skills.length === 0">
+    No skills have been added.
+  </p>
+
+</div>

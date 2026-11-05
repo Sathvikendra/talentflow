@@ -1,1 +1,73 @@
-<p>l1-evaluation-form works!</p>
+
+<div class="page-container">
+  <h2>Create L1 Evaluation</h2>
+  <p>Create a first-level evaluation for an existing submission.</p>
+
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <form (ngSubmit)="createEvaluation()">
+    <div>
+      <label for="submissionId">Submission ID</label>
+      <input
+        id="submissionId"
+        type="number"
+        name="submissionId"
+        min="1"
+        [(ngModel)]="submissionId"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="interviewerId">Interviewer User ID</label>
+      <input
+        id="interviewerId"
+        type="number"
+        name="interviewerId"
+        min="1"
+        [(ngModel)]="interviewerId"
+        required
+      />
+    </div>
+
+    <div>
+      <label for="scheduledAt">Scheduled Date and Time (Optional)</label>
+      <input
+        id="scheduledAt"
+        type="datetime-local"
+        name="scheduledAt"
+        [(ngModel)]="scheduledAt"
+      />
+    </div>
+
+    <div>
+      <label for="durationMinutes">Duration in Minutes (Optional)</label>
+      <input
+        id="durationMinutes"
+        type="number"
+        name="durationMinutes"
+        min="1"
+        [(ngModel)]="durationMinutes"
+      />
+    </div>
+
+    <div>
+      <label for="meetingLink">Meeting Link (Optional)</label>
+      <input
+        id="meetingLink"
+        type="url"
+        name="meetingLink"
+        maxlength="1000"
+        [(ngModel)]="meetingLink"
+      />
+    </div>
+
+    <button type="submit" [disabled]="isSaving">
+      {{ isSaving ? 'Creating...' : 'Create Evaluation' }}
+    </button>
+
+    <button type="button" (click)="cancel()" [disabled]="isSaving">
+      Cancel
+    </button>
+  </form>
+</div>

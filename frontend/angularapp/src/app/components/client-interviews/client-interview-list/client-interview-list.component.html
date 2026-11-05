@@ -1,1 +1,86 @@
-<p>client-interview-list works!</p>
+
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h2>Client Interviews</h2>
+      <p>View and manage client interview schedules and outcomes.</p>
+    </div>
+
+    <button type="button" (click)="createInterview()">
+      Create Client Interview
+    </button>
+  </div>
+
+  <div class="filter-section">
+    <input
+      type="text"
+      placeholder="Search by interview, submission, interviewer or email"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="applyFilters()"
+    />
+
+    <select
+      [(ngModel)]="selectedResult"
+      (ngModelChange)="applyFilters()"
+    >
+      <option value="ALL">All interviews</option>
+      <option value="PENDING">Pending</option>
+      <option value="ACCEPTED">Accepted</option>
+      <option value="REJECTED">Rejected</option>
+    </select>
+  </div>
+
+  <p *ngIf="isLoading">Loading client interviews...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <p *ngIf="filteredInterviews.length === 0">
+      No client interviews found.
+    </p>
+
+    <table *ngIf="filteredInterviews.length > 0">
+      <thead>
+        <tr>
+          <th>Interview ID</th>
+          <th>Submission ID</th>
+          <th>Client Interviewer</th>
+          <th>Scheduled At</th>
+          <th>Duration</th>
+          <th>Result</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let interview of filteredInterviews">
+          <td>{{ interview.id }}</td>
+          <td>{{ interview.submissionId }}</td>
+          <td>{{ interview.clientInterviewerName || 'Not specified' }}</td>
+          <td>
+            {{
+              interview.scheduledAt
+                ? (interview.scheduledAt | date:'medium')
+                : 'Not scheduled'
+            }}
+          </td>
+          <td>
+            {{
+              interview.durationMinutes
+                ? interview.durationMinutes + ' min'
+                : 'Not specified'
+            }}
+          </td>
+          <td>{{ getResultLabel(interview.result) }}</td>
+          <td>
+            <button
+              type="button"
+              (click)="openInterview(interview.id)"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -50,6 +50,7 @@ public class AuthService {
 
         return new AuthDTO.LoginResponse(
                 token,
+                userPrincipal.getId(),
                 userPrincipal.getUsername(),
                 userPrincipal.getRole()
         );

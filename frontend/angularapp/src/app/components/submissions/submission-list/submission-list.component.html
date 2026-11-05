@@ -1,1 +1,102 @@
-<p>submission-list works!</p>
+<div class="submission-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Candidate Submissions</h1>
+      <p>Track candidate progress against client requirements.</p>
+    </div>
+  </div>
+
+  <section>
+    <label for="submissionSearch">Search</label>
+    <input
+      id="submissionSearch"
+      type="text"
+      placeholder="Search by submission, candidate or requirement ID"
+      [(ngModel)]="searchText"
+      (ngModelChange)="applyFilters()">
+
+    <label for="submissionStatus">Status</label>
+    <select
+      id="submissionStatus"
+      [(ngModel)]="selectedStatus"
+      (ngModelChange)="applyFilters()">
+
+      <option value="">All statuses</option>
+
+      <option *ngFor="let status of statuses" [ngValue]="status">
+        {{ getStatusLabel(status) }}
+      </option>
+    </select>
+
+    <button type="button" (click)="clearFilters()">
+      Clear Filters
+    </button>
+  </section>
+
+  <div *ngIf="isLoading">
+    Loading submissions...
+  </div>
+
+  <div *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button type="button" (click)="loadSubmissions()">Retry</button>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage && submissions.length === 0">
+    <h3>No submissions found</h3>
+    <p>There are currently no candidate submissions.</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !errorMessage && submissions.length > 0
+           && filteredSubmissions.length === 0">
+    <p>No submissions match your search or selected status.</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && !errorMessage && filteredSubmissions.length > 0">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Submission ID</th>
+          <th>Candidate ID</th>
+          <th>Requirement ID</th>
+          <th>Status</th>
+          <th>Assigned To</th>
+          <th>Submitted On</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let submission of filteredSubmissions">
+
+          <td>{{ submission.id }}</td>
+          <td>{{ submission.candidateId }}</td>
+          <td>{{ submission.requirementId }}</td>
+          <td>{{ getStatusLabel(submission.currentStatus) }}</td>
+          <td>{{ submission.assignedTo ?? 'Unassigned' }}</td>
+
+          <td>
+            {{ submission.createdAt
+              ? (submission.createdAt | date:'mediumDate')
+              : 'Not available' }}
+          </td>
+
+          <td>
+            <button
+              type="button"
+              [routerLink]="['/submissions', submission.id]">
+              View
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

@@ -1,1 +1,200 @@
-<p>requirement-form works!</p>
+<div class="requirement-form-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Create Requirement</h1>
+      <p>Enter the details of the new client requirement.</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoadingClients">
+    Loading clients...
+  </div>
+
+  <div *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <form
+    *ngIf="!isLoadingClients"
+    [formGroup]="requirementForm"
+    (ngSubmit)="submitForm()"
+    novalidate>
+
+    <fieldset>
+      <legend>Basic Information</legend>
+
+      <div>
+        <label for="rrNumber">RR Number *</label>
+        <input id="rrNumber" type="text" formControlName="rrNumber">
+
+        <small *ngIf="isInvalid('rrNumber')">
+          RR Number is required.
+        </small>
+      </div>
+
+      <div>
+        <label for="clientId">Client *</label>
+
+        <select id="clientId" formControlName="clientId">
+          <option [ngValue]="null">Select Client</option>
+
+          <option
+            *ngFor="let client of clients"
+            [ngValue]="client.id">
+            {{ client.clientName }}
+          </option>
+        </select>
+
+        <small *ngIf="isInvalid('clientId')">
+          Please select a client.
+        </small>
+
+        <small *ngIf="!isLoadingClients && clients.length === 0">
+          No active clients are available. Create or activate a client first.
+        </small>
+      </div>
+
+      <div>
+        <label for="title">Requirement Title *</label>
+        <input id="title" type="text" formControlName="title">
+
+        <small *ngIf="isInvalid('title')">
+          Requirement title is required.
+        </small>
+      </div>
+
+      <div>
+        <label for="description">Description *</label>
+        <textarea
+          id="description"
+          rows="5"
+          formControlName="description">
+        </textarea>
+
+        <small *ngIf="isInvalid('description')">
+          Description is required.
+        </small>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Employment Details</legend>
+
+      <div>
+        <label for="employmentType">Employment Type</label>
+        <select id="employmentType" formControlName="employmentType">
+          <option [ngValue]="null">Select Employment Type</option>
+          <option value="FULL_TIME">Full Time</option>
+          <option value="CONTRACT">Contract</option>
+          <option value="PART_TIME">Part Time</option>
+          <option value="INTERNSHIP">Internship</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="location">Location</label>
+        <input id="location" type="text" formControlName="location">
+      </div>
+
+      <div>
+        <label for="workMode">Work Mode *</label>
+        <select id="workMode" formControlName="workMode">
+          <option value="">Select Work Mode</option>
+          <option value="ONSITE">Onsite</option>
+          <option value="REMOTE">Remote</option>
+          <option value="HYBRID">Hybrid</option>
+        </select>
+
+        <small *ngIf="isInvalid('workMode')">
+          Work mode is required.
+        </small>
+      </div>
+
+      <div>
+        <label for="onshoreOrOffshore">Onshore / Offshore *</label>
+        <select
+          id="onshoreOrOffshore"
+          formControlName="onshoreOrOffshore">
+
+          <option value="">Select Option</option>
+          <option value="ONSHORE">Onshore</option>
+          <option value="OFFSHORE">Offshore</option>
+        </select>
+
+        <small *ngIf="isInvalid('onshoreOrOffshore')">
+          Please select Onshore or Offshore.
+        </small>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Experience and Positions</legend>
+
+      <div>
+        <label for="minExperienceYears">Minimum Experience (Years)</label>
+        <input
+          id="minExperienceYears"
+          type="number"
+          min="0"
+          step="0.5"
+          formControlName="minExperienceYears">
+      </div>
+
+      <div>
+        <label for="maxExperienceYears">Maximum Experience (Years)</label>
+        <input
+          id="maxExperienceYears"
+          type="number"
+          min="0"
+          step="0.5"
+          formControlName="maxExperienceYears">
+      </div>
+
+      <div>
+        <label for="positionsCount">Number of Positions *</label>
+        <input
+          id="positionsCount"
+          type="number"
+          min="1"
+          formControlName="positionsCount">
+
+        <small *ngIf="isInvalid('positionsCount')">
+          At least one position is required.
+        </small>
+      </div>
+
+      <div>
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority">
+          <option [ngValue]="null">Select Priority</option>
+          <option value="HIGH">High</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="LOW">Low</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="targetFillDate">Target Fill Date</label>
+        <input
+          id="targetFillDate"
+          type="date"
+          formControlName="targetFillDate">
+      </div>
+    </fieldset>
+
+    <div>
+      <button
+        type="submit"
+        [disabled]="isSubmitting || isLoadingClients">
+        {{ isSubmitting ? 'Creating...' : 'Create Requirement' }}
+      </button>
+
+      <button type="button" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</div>

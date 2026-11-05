@@ -5,8 +5,8 @@ export interface StatusHistory {
   submissionId: number;
   oldStatus: SubmissionStatus | null;
   newStatus: SubmissionStatus;
-  changedBy: number;
+  changedBy: number | null;
   transitionReason: string | null;
   comments: string | null;
-  changedAt: string | null;
+  changedAt: string;
 }

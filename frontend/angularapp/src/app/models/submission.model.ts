@@ -15,7 +15,7 @@ export interface Submission {
   candidateId: number;
   requirementId: number;
   currentStatus: SubmissionStatus;
-  submittedBy: number;
+  submittedBy: number | null;
   assignedTo: number | null;
   submissionNotes: string | null;
   assignedAt: string | null;
@@ -26,7 +26,7 @@ export interface Submission {
 export interface CreateSubmissionRequest {
   candidateId: number;
   requirementId: number;
-  submissionNotes?: string | null;
+  submissionNotes: string | null;
 }
 
 export interface UpdateSubmissionRequest {
@@ -37,8 +37,8 @@ export interface UpdateSubmissionRequest {
 
 export interface UpdateSubmissionStatusRequest {
   status: SubmissionStatus;
-  reason?: string | null;
-  comments?: string | null;
+  reason: string;
+  comments: string | null;
 }
 
 export interface AssignSubmissionRequest {

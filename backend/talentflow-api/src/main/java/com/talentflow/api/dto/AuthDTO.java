@@ -12,6 +12,7 @@ public class AuthDTO {
 
     public record LoginResponse(
             String token,
+            Long id,
             String username,
             Role role
     ) {

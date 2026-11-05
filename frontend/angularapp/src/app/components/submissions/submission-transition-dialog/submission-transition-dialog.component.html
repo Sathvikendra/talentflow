@@ -1,1 +1,92 @@
-<p>submission-transition-dialog works!</p>
+<div class="transition-dialog">
+
+  <div>
+    <h2>Change Submission Status</h2>
+    <p>Submission #{{ submission.id }}</p>
+  </div>
+
+  <div>
+    <p>
+      <strong>Current Status:</strong>
+      {{ getStatusLabel(submission.currentStatus) }}
+    </p>
+  </div>
+
+  <form
+    [formGroup]="transitionForm"
+    (ngSubmit)="submitTransition()"
+    novalidate>
+
+    <div>
+      <label for="newStatus">New Status *</label>
+
+      <select id="newStatus" formControlName="status">
+        <option value="">Select New Status</option>
+
+        <option
+          *ngFor="let status of statuses"
+          [ngValue]="status"
+          [disabled]="status === submission.currentStatus">
+
+          {{ getStatusLabel(status) }}
+
+        </option>
+      </select>
+
+      <small
+        *ngIf="transitionForm.get('status')?.invalid
+               && transitionForm.get('status')?.touched">
+        Please select a status.
+      </small>
+    </div>
+
+    <div>
+      <label for="reason">Reason for Transition *</label>
+
+      <textarea
+        id="reason"
+        rows="3"
+        formControlName="reason"
+        placeholder="Explain why the submission status is changing">
+      </textarea>
+
+      <small
+        *ngIf="transitionForm.get('reason')?.invalid
+               && transitionForm.get('reason')?.touched">
+        A reason is required.
+      </small>
+    </div>
+
+    <div>
+      <label for="comments">Additional Comments</label>
+
+      <textarea
+        id="comments"
+        rows="4"
+        formControlName="comments"
+        placeholder="Optional comments">
+      </textarea>
+    </div>
+
+    <div *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Updating...' : 'Confirm Status Change' }}
+      </button>
+
+      <button
+        type="button"
+        (click)="cancel()"
+        [disabled]="isSubmitting">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</div>

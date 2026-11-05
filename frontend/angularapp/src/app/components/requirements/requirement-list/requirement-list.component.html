@@ -1,1 +1,99 @@
-<p>requirement-list works!</p>
+<div class="requirement-page">
+
+  <div class="page-header">
+    <div>
+      <h1>Requirements</h1>
+      <p>Manage and track client job requirements.</p>
+    </div>
+
+    <button class="primary-button" routerLink="/requirements/new">
+      + Create Requirement
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="state-container" *ngIf="isLoading">
+    <p>Loading requirements...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="state-container error-state" *ngIf="!isLoading && errorMessage">
+    <p>{{ errorMessage }}</p>
+    <button class="secondary-button" (click)="retryLoading()">
+      Retry
+    </button>
+  </div>
+
+  <!-- Empty -->
+  <div
+    class="state-container empty-state"
+    *ngIf="!isLoading && !errorMessage && requirements.length === 0">
+
+    <h3>No requirements found</h3>
+    <p>Start by creating your first client requirement.</p>
+
+    <button class="primary-button" routerLink="/requirements/new">
+      Create Requirement
+    </button>
+  </div>
+
+  <app-requirement-filters
+    (filtersChanged)="applyFilters($event)">
+    </app-requirement-filters>
+
+  <!-- Requirement table -->
+  <div
+    class="table-container"
+    *ngIf="!isLoading && !errorMessage && requirements.length > 0 && filteredRequirements.length === 0">
+    <p>No requirements match the current filters.</p>
+    <table class="requirement-table">
+
+      <thead>
+        <tr>
+          <th>RR Number</th>
+          <th>Requirement</th>
+          <th>Client</th>
+          <th>Experience</th>
+          <th>Positions</th>
+          <th>Priority</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let requirement of filteredRequirements">
+
+          <td>{{ requirement.rrNumber }}</td>
+
+          <td>
+            <strong>{{ requirement.title }}</strong>
+            <small>{{ requirement.location || 'Location not specified' }}</small>
+          </td>
+
+          <td>{{ getClientName(requirement) }}</td>
+
+          <td>{{ getExperienceRange(requirement) }}</td>
+
+          <td>{{ requirement.positionsCount }}</td>
+
+          <td>
+            <span class="priority-text">
+              {{ requirement.priority || 'Not specified' }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="status-badge"
+              [ngClass]="requirement.status.toLowerCase()">
+              {{ requirement.status }}
+            </span>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

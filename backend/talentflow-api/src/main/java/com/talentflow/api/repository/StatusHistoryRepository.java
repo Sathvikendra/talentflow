@@ -1,6 +1,8 @@
 package com.talentflow.api.repository;
 
 import com.talentflow.api.entity.StatusHistory;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,4 +20,7 @@ public interface StatusHistoryRepository
     findByChangedByIdOrderByChangedAtAsc(Long changedById);
 
     boolean existsBySubmissionId(Long submissionId);
+
+    List<StatusHistory>
+    findAllByOrderByChangedAtDescIdDesc(Pageable pageable);
 }

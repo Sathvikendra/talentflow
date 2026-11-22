@@ -3,6 +3,7 @@ package com.talentflow.api.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +14,6 @@ import com.talentflow.api.entity.AIAssessment.AssessmentStatus;
 import com.talentflow.api.entity.CandidateSubmission;
 import com.talentflow.api.entity.ResumeDocument;
 import com.talentflow.api.exception.AIAssessmentNotFoundException;
-import com.talentflow.api.exception.AccessDeniedException;
 import com.talentflow.api.exception.CandidateSubmissionNotFoundException;
 import com.talentflow.api.repository.AIAssessmentRepository;
 import com.talentflow.api.repository.CandidateSubmissionRepository;

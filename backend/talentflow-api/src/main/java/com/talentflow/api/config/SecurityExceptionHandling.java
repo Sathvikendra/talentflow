@@ -1,17 +1,18 @@
+
 package com.talentflow.api.config;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.time.Instant;
-
 @Component
-public class SecurityExceptionHandling
-        implements AccessDeniedHandler {
+public class SecurityExceptionHandling implements AccessDeniedHandler {
 
     @Override
     public void handle(
@@ -22,17 +23,20 @@ public class SecurityExceptionHandling
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
 
-        response.getWriter().write("""
+        String json = """
             {
-              "success": false,
-              "message": "Access denied",
-              "timestamp": "%s",
-              "path": "%s"
+                "success": false,
+                "message": "You do not have permission to perform this action",
+                "timestamp": "%s",
+                "path": "%s"
             }
             """.formatted(
-                Instant.now(),
+                LocalDateTime.now(),
                 request.getRequestURI()
-            ));
+            );
+
+        response.getWriter().write(json);
     }
 }

@@ -37,10 +37,10 @@ public class AIAssessment {
     @JoinColumn(name = "resume_document_id")
     private ResumeDocument resumeDocument;
 
-    @Column(name = "model_name", length = 255)
+    @Column(name = "model_name", length = 100)
     private String modelName;
 
-    @Column(name = "prompt_version", length = 100)
+    @Column(name = "prompt_version", length = 30)
     private String promptVersion;
 
     @Enumerated(EnumType.STRING)
@@ -74,7 +74,7 @@ public class AIAssessment {
     private String errorMessage;
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "completed_at")

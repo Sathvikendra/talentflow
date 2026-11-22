@@ -12,16 +12,17 @@ public class CandidateSkill {
     @EmbeddedId
     private CandidateSkillId id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("candidateId")
-    @JoinColumn(name = "candidate_id")
+    @JoinColumn(name = "candidate_id", nullable = false)
     private Candidate candidate;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("skillId")
-    @JoinColumn(name = "skill_id")
+    @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
 
+    @Column (name = "proficiency", length = 30)
     private String proficiency;
 
     @Column(
@@ -31,11 +32,12 @@ public class CandidateSkill {
     )
     private BigDecimal yearsExperience;
 
-    @Column(nullable = false)
+    @Column(name = "source", nullable = false, length = 30)
     private String source;
 
     @Column(
             name = "created_at",
+            nullable = false,
             insertable = false,
             updatable = false
     )
@@ -43,6 +45,7 @@ public class CandidateSkill {
 
     @Column(
             name = "updated_at",
+            nullable = false,
             insertable = false,
             updatable = false
     )

@@ -3,6 +3,7 @@ package com.talentflow.api.repository;
 import com.talentflow.api.entity.CandidateSubmission;
 import com.talentflow.api.entity.CandidateSubmission.SubmissionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,4 +30,15 @@ public interface CandidateSubmissionRepository
     );
 
     List<CandidateSubmission> findByAssignedToId(Long assignedToId);
+
+    long countByCurrentStatus(SubmissionStatus currentStatus);
+
+    long countByAssignedToIsNotNull();
+
+    long countByAssignedToIsNull();
+
+    @Query("SELECT s.currentStatus, COUNT(s) " +
+           "FROM CandidateSubmission s " +
+           "GROUP BY s.currentStatus")
+    List<Object[]> countSubmissionsByStatus();
 }

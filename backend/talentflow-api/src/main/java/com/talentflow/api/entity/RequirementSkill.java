@@ -12,17 +12,17 @@ public class RequirementSkill {
     @EmbeddedId
     private RequirementSkillId id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("requirementId")
-    @JoinColumn(name = "requirement_id")
+    @JoinColumn(name = "requirement_id", nullable = false)
     private Requirement requirement;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @MapsId("skillId")
-    @JoinColumn(name = "skill_id")
+    @JoinColumn(name = "skill_id", nullable = false)
     private Skill skill;
 
-    @Column(nullable = false)
+    @Column(name = "importance", nullable = false, length = 20)
     private String importance;
 
     @Column(
@@ -34,6 +34,7 @@ public class RequirementSkill {
 
     @Column(
             name = "created_at",
+            nullable = false,
             insertable = false,
             updatable = false
     )

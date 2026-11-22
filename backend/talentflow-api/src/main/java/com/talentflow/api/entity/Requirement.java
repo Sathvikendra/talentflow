@@ -13,28 +13,29 @@ public class Requirement {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 
-@Column(name = "rr_number", nullable = false, unique = true)
+@Column(name = "rr_number", nullable = false, unique = true, length = 50)
 private String rrNumber;
 
 @ManyToOne
 @JoinColumn(name = "client_id", nullable = false)
 private Client client;
 
-@Column(nullable = false)
+@Column(name = "title", nullable = false, length = 200)
 private String title;
 
 @Column(nullable = false, columnDefinition = "TEXT")
 private String description;
 
-@Column(name = "employment_type")
+@Column(name = "employment_type", length = 50)
 private String employmentType;
 
+@Column (name="location", length = 200)
 private String location;
 
-@Column(name = "work_mode")
+@Column(name = "work_mode", nullable = false, length = 30)
 private String workMode;
 
-@Column(name = "onshore_or_offshore")
+@Column(name = "onshore_or_offshore", nullable = false, length = 20)
 private String onshoreOrOffshore;
 
 @Column(name = "min_experience_years", precision = 4, scale = 1)
@@ -43,18 +44,20 @@ private BigDecimal minExperienceYears;
 @Column(name = "max_experience_years", precision = 4, scale = 1)
 private BigDecimal maxExperienceYears;
 
-@Column(name = "positions_count")
+@Column(name = "positions_count", nullable = false)
 private Integer positionsCount;
 
+@Column (name = "priority", length = 20)
 private String priority;
 
+@Column (name = "status", nullable = false, length = 30)
 private String status = "OPEN";
 
 @ManyToOne
 @JoinColumn(name = "created_by")
 private User createdBy;
 
-@Column(name = "opened_at", insertable = false, updatable = false)
+@Column(name = "opened_at", nullable = false, insertable = false, updatable = false)
 private LocalDateTime openedAt;
 
 @Column(name = "target_fill_date")
@@ -63,10 +66,10 @@ private LocalDate targetFillDate;
 @Column(name = "closed_at")
 private LocalDateTime closedAt;
 
-@Column(name = "created_at", insertable = false, updatable = false)
+@Column(name = "created_at", nullable = false, insertable = false, updatable = false)
 private LocalDateTime createdAt;
 
-@Column(name = "updated_at", insertable = false, updatable = false)
+@Column(name = "updated_at", nullable = false, insertable = false, updatable = false)
 private LocalDateTime updatedAt;
 
 

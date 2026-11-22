@@ -12,8 +12,8 @@ public class ResumeDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "candidate_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "candidate_id", nullable = false)
     private Candidate candidate;
 
     @Column(name = "original_file_name", nullable = false)
@@ -22,32 +22,32 @@ public class ResumeDocument {
     @Column(name = "stored_file_name", nullable = false)
     private String storedFileName;
 
-    @Column(name = "storage_path", nullable = false)
+    @Column(name = "storage_path", nullable = false, length = 1000)
     private String storagePath;
 
-    @Column(name = "content_type", nullable = false)
+    @Column(name = "content_type", nullable = false, length = 100)
     private String contentType;
 
     @Column(name = "file_size_bytes", nullable = false)
     private Long fileSizeBytes;
 
-    @Column(name = "file_hash")
+    @Column(name = "file_hash", length = 128)
     private String fileHash;
 
     @Column(name = "extracted_text", columnDefinition = "LONGTEXT")
     private String extractedText;
 
-    @Column(name = "parsing_status")
+    @Column(name = "parsing_status", nullable = false, length = 30)
     private String parsingStatus = "PENDING";
 
-    @ManyToOne
-    @JoinColumn(name = "uploaded_by")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "uploaded_by", nullable = false)
     private User uploadedBy;
 
-    @Column(name = "uploaded_at", insertable = false, updatable = false)
+    @Column(name = "uploaded_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime uploadedAt;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
     public Long getId() {

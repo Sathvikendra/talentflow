@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,7 +13,6 @@ import com.talentflow.api.config.UserPrincipal;
 import com.talentflow.api.dto.NotificationDTO;
 import com.talentflow.api.entity.Notification;
 import com.talentflow.api.entity.User;
-import com.talentflow.api.exception.AccessDeniedException;
 import com.talentflow.api.exception.NotificationNotFoundException;
 import com.talentflow.api.repository.NotificationRepository;
 import com.talentflow.api.repository.UserRepository;

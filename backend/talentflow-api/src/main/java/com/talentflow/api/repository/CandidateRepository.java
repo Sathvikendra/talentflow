@@ -9,4 +9,6 @@ public interface CandidateRepository
     boolean existsByCandidateReference(
             String candidateReference
     );
+
+    long countByStatus(String status);
 }

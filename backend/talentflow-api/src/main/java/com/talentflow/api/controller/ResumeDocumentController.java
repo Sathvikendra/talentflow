@@ -1,14 +1,13 @@
 package com.talentflow.api.controller;
 
 import com.talentflow.api.dto.ResumeDocumentDTO;
-import com.talentflow.api.entity.ResumeDocument;
 import com.talentflow.api.service.ResumeDocumentService;
 
-import jakarta.validation.Valid;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,45 +20,36 @@ public class ResumeDocumentController {
     public ResumeDocumentController(
             ResumeDocumentService resumeDocumentService
     ) {
-        this.resumeDocumentService =
-                resumeDocumentService;
+        this.resumeDocumentService = resumeDocumentService;
     }
 
-    @PostMapping
-    public ResponseEntity<ResumeDocument>
-    createResume(
-            @Valid
-            @RequestBody
-            ResumeDocumentDTO.CreateResumeDocumentRequest request
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResumeDocumentDTO.ResumeDocumentResponse> uploadResume(
+            @RequestParam Long candidateId,
+            @RequestParam Long uploadedBy,
+            @RequestParam("file") MultipartFile file
     ) {
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(
-                        resumeDocumentService
-                                .createResume(request)
-                );
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(resumeDocumentService.uploadResume(
+                        candidateId,
+                        uploadedBy,
+                        file
+                ));
     }
 
     @GetMapping
-    public ResponseEntity<List<ResumeDocument>>
+    public ResponseEntity<List<ResumeDocumentDTO.ResumeDocumentResponse>>
     getAllResumes() {
-
         return ResponseEntity.ok(
-                resumeDocumentService
-                        .getAllResumes()
+                resumeDocumentService.getAllResumes()
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResumeDocument>
-    getResumeById(
-            @PathVariable Long id
-    ) {
-
+    public ResponseEntity<ResumeDocumentDTO.ResumeDocumentResponse>
+    getResumeById(@PathVariable Long id) {
         return ResponseEntity.ok(
-                resumeDocumentService
-                        .getResumeById(id)
+                resumeDocumentService.getResumeById(id)
         );
     }
 }

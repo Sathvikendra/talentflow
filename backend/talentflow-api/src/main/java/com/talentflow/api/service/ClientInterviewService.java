@@ -2,6 +2,7 @@ package com.talentflow.api.service;
 
 import java.util.List;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,6 @@ import com.talentflow.api.dto.ClientInterviewDTO;
 import com.talentflow.api.entity.CandidateSubmission;
 import com.talentflow.api.entity.ClientInterview;
 import com.talentflow.api.entity.ClientInterview.Result;
-import com.talentflow.api.exception.AccessDeniedException;
 import com.talentflow.api.exception.CandidateSubmissionNotFoundException;
 import com.talentflow.api.exception.ClientInterviewNotFoundException;
 import com.talentflow.api.repository.CandidateSubmissionRepository;
@@ -231,7 +231,7 @@ public class ClientInterviewService {
         ClientInterview interview = findInterview(id);
 
         if (interview.getResult() != null) {
-            throw new IllegalStateException(
+            throw new IllegalArgumentException(
                     "The result for this client interview has already been recorded");
         }
 

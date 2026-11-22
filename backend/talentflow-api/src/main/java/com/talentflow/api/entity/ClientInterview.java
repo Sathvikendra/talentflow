@@ -30,7 +30,7 @@ public class ClientInterview {
     @JoinColumn(name = "submission_id", nullable = false)
     private CandidateSubmission submission;
 
-    @Column(name = "client_interviewer_name", length = 255)
+    @Column(name = "client_interviewer_name", length = 150)
     private String clientInterviewerName;
 
     @Column(name = "client_interviewer_email", length = 255)
@@ -56,11 +56,11 @@ public class ClientInterview {
     private String comments;
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime updatedAt;
 
     public ClientInterview() {
